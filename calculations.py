@@ -29,5 +29,3 @@ def calculate_required_propellant(final_mass, target_delta_v, isp):
         required_propellant = final_mass * math.expm1(target_delta_v / (isp * g0))
         
         return required_propellant
-    
-print(calculate_required_propellant(13000, 4000, 350))

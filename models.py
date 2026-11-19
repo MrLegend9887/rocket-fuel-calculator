@@ -1,4 +1,5 @@
 import math
+from calculations import calculate_delta_v as calculate_delta_v_formula
 class RocketStage:
     def __init__(self, dry_mass, propellant_mass, isp, payload_mass):
         self.dry_mass = dry_mass
@@ -35,8 +36,13 @@ class RocketStage:
         initial_mass = self.initial_mass()
         final_mass = self.final_mass()
         return initial_mass / final_mass
+
+    def calculate_delta_v(self):
+        delta_v = calculate_delta_v_formula(self.initial_mass(), self.final_mass(), self.isp)
+        return delta_v
     
 stage1 = RocketStage(4000, 20000, 300, 2000)
 print("Initial mass:", stage1.initial_mass())
 print("Final mass:", stage1.final_mass())
 print("Mass ratio:", stage1.mass_ratio())
+print("Delta V:", stage1.calculate_delta_v())
