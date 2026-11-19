@@ -22,4 +22,21 @@ class RocketStage:
             raise ValueError("isp cannot be zero or negative")
         elif self.payload_mass < 0:
             raise ValueError("payload cannot be negative")
+
+    def initial_mass(self):
+        initial_mass = self.dry_mass + self.propellant_mass + self.payload_mass
+        return initial_mass
+
+    def final_mass(self):
+        final_mass = self.dry_mass + self.payload_mass 
+        return final_mass
+
+    def mass_ratio(self):
+        initial_mass = self.initial_mass()
+        final_mass = self.final_mass()
+        return initial_mass / final_mass
+    
 stage1 = RocketStage(4000, 20000, 300, 2000)
+print("Initial mass:", stage1.initial_mass())
+print("Final mass:", stage1.final_mass())
+print("Mass ratio:", stage1.mass_ratio())
