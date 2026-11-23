@@ -51,6 +51,13 @@ class Rocket:
             delta_v.append(stage.calculate_delta_v())
         return delta_v
 
+    def total_delta_v(self):
+        total_delta_v = 0
+        delta_v = self.calculate_delta_v()
+        for stage_delta_v in delta_v:
+            total_delta_v += stage_delta_v
+        return total_delta_v
+    
 # Test And Dummy Data
 
 stage1 = RocketStage(4000, 20000, 300, 2000)
@@ -79,3 +86,4 @@ for stage in rocket.stages:
 # Rocket Class Method Test
 
 rocket.calculate_delta_v()
+rocket.total_delta_v()
