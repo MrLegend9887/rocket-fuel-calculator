@@ -40,9 +40,29 @@ class RocketStage:
     def calculate_delta_v(self):
         delta_v = calculate_delta_v_formula(self.initial_mass(), self.final_mass(), self.isp)
         return delta_v
-    
+
+class Rocket:
+    def __init__(self, stages):
+        self.stages = stages
+
+# Test And Dummy Data
+
 stage1 = RocketStage(4000, 20000, 300, 2000)
+stage2 = RocketStage(2500, 10000, 340, 500)
+stage3 = RocketStage(1000, 4000, 360, 100)
+stages = [stage1, stage2, stage3]
+
+rocket = Rocket(stages)
+
 print("Initial mass:", stage1.initial_mass())
 print("Final mass:", stage1.final_mass())
 print("Mass ratio:", stage1.mass_ratio())
 print("Delta V:", stage1.calculate_delta_v())
+
+
+print(rocket.stages)
+print(len(rocket.stages))
+print(rocket.stages[0].isp)
+
+for stage in rocket.stages:
+    print(stage.calculate_delta_v())
