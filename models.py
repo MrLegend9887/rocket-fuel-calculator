@@ -1,5 +1,6 @@
 import math
 from calculations import calculate_delta_v as calculate_delta_v_formula
+from calculations import calculate_required_propellant as calculate_required_propellant
 class RocketStage:
     def __init__(self, dry_mass, propellant_mass, isp, payload_mass):
         self.dry_mass = dry_mass
@@ -40,6 +41,10 @@ class RocketStage:
     def calculate_delta_v(self):
         delta_v = calculate_delta_v_formula(self.initial_mass(), self.final_mass(), self.isp)
         return delta_v
+
+    def calculate_required_propellant(self, target_delta_v):
+        required_propellant = calculate_required_propellant(self.final_mass(), target_delta_v, self.isp)
+        return required_propellant
 
 class Rocket:
     def __init__(self, stages):
@@ -87,3 +92,4 @@ for stage in rocket.stages:
 
 rocket.calculate_delta_v()
 rocket.total_delta_v()
+print(stage1.calculate_required_propellant(4500))
