@@ -1,6 +1,9 @@
+
 import math
 from calculations import calculate_delta_v as calculate_delta_v_formula
 from calculations import calculate_required_propellant as calculate_required_propellant
+
+
 class RocketStage:
     def __init__(self, dry_mass, propellant_mass, isp, payload_mass):
         self.dry_mass = dry_mass
@@ -8,7 +11,7 @@ class RocketStage:
         self.isp = isp
         self.payload_mass = payload_mass
         self.valueValidate()
-    
+
     def valueValidate(self):
         if any(isinstance(value, bool) for value in (self.dry_mass, self.propellant_mass, self.isp, self.payload_mass)):
             raise TypeError("Boolean values are not allowed")
@@ -30,7 +33,7 @@ class RocketStage:
         return initial_mass
 
     def final_mass(self):
-        final_mass = self.dry_mass + self.payload_mass 
+        final_mass = self.dry_mass + self.payload_mass
         return final_mass
 
     def mass_ratio(self):
@@ -46,9 +49,11 @@ class RocketStage:
         required_propellant = calculate_required_propellant(self.final_mass(), target_delta_v, self.isp)
         return required_propellant
 
+
 class Rocket:
-    def __init__(self, stages):
+    def __init__(self, stages, payload_mass):
         self.stages = stages
+        self.payload_mass = payload_mass
 
     def calculate_delta_v(self):
         delta_v = []
@@ -62,34 +67,27 @@ class Rocket:
         for stage_delta_v in delta_v:
             total_delta_v += stage_delta_v
         return total_delta_v
-    
-# Test And Dummy Data
 
-stage1 = RocketStage(4000, 20000, 300, 2000)
-stage2 = RocketStage(2500, 10000, 340, 500)
-stage3 = RocketStage(1000, 4000, 360, 100)
+    def calculate_payload(self):
+        stages = self.stages
+        stages_payload = []
+        for i in range(len(stages)):
+            stage_payload = 0
+            for k in range(i + 1, len(stages)):
+                stage_payload += stages[k].dry_mass + stages[k].propellant_mass
+            stage_payload += self.payload_mass
+            stages_payload.append(stage_payload)
+            self.stages[i].payload_mass = stages_payload[i]
+        return stages_payload
+
+stage1 = RocketStage(4000, 20000, 300, 0)
+stage2 = RocketStage(2500, 10000, 340, 0)
+stage3 = RocketStage(1000, 4000, 360, 0)
+
 stages = [stage1, stage2, stage3]
 
-rocket = Rocket(stages)
+rocket = Rocket(stages, 100)
 
-# Stages Attributes Test
-
-print("Initial mass:", stage1.initial_mass())
-print("Final mass:", stage1.final_mass())
-print("Mass ratio:", stage1.mass_ratio())
-print("Delta V:", stage1.calculate_delta_v())
-
-#Rocket Class Test
-
-print(rocket.stages)
-print(len(rocket.stages))
-print(rocket.stages[0].isp)
-
-for stage in rocket.stages:
-    print(stage.calculate_delta_v())
-
-# Rocket Class Method Test
-
-rocket.calculate_delta_v()
-rocket.total_delta_v()
-print(stage1.calculate_required_propellant(4500))
+print("Payload:", rocket.calculate_payload())
+print("Stage Δv:", rocket.calculate_delta_v())
+print("Total Δv:", rocket.total_delta_v())
