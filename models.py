@@ -54,6 +54,23 @@ class Rocket:
     def __init__(self, stages, payload_mass):
         self.stages = stages
         self.payload_mass = payload_mass
+        self.validateValue()
+
+    def validateValue(self):
+        if isinstance(self.payload_mass, bool):
+            raise TypeError("Boolean values are not allowed")
+        elif not isinstance(self.payload_mass, (int,float)):
+            raise TypeError("all entered value must be numeric")
+        elif not isinstance(self.stages, list):
+            raise TypeError("stages must be list")
+        elif self.stages == []:
+            raise ValueError("Stages cannot be empty")
+        elif not math.isfinite(self.payload_mass):
+            raise ValueError("all entered value must be numeric")
+        elif self.payload_mass < 0:
+            raise ValueError("payload mass cannot be negative")
+        elif any(not isinstance(value,RocketStage) for value in self.stages):
+            raise TypeError("Every element of stages must be a instance of RocketStage class")
 
     def calculate_delta_v(self):
         delta_v = []
@@ -87,7 +104,3 @@ stage3 = RocketStage(1000, 4000, 360, 0)
 stages = [stage1, stage2, stage3]
 
 rocket = Rocket(stages, 100)
-
-print("Payload:", rocket.calculate_payload())
-print("Stage Δv:", rocket.calculate_delta_v())
-print("Total Δv:", rocket.total_delta_v())
