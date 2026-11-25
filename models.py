@@ -30,16 +30,29 @@ class RocketStage:
 
     def initial_mass(self):
         initial_mass = self.dry_mass + self.propellant_mass + self.payload_mass
+
+        if not math.isfinite(initial_mass):
+            raise ValueError("Initial mass must be finite")
+
         return initial_mass
 
     def final_mass(self):
         final_mass = self.dry_mass + self.payload_mass
+
+        if not math.isfinite(final_mass):
+            raise ValueError("Final mass must be finite")
+
         return final_mass
 
     def mass_ratio(self):
         initial_mass = self.initial_mass()
         final_mass = self.final_mass()
-        return initial_mass / final_mass
+        mass_ratio = initial_mass / final_mass
+
+        if not math.isfinite(mass_ratio):
+            raise ValueError("Mass ratio must be finite")
+
+        return mass_ratio
 
     def calculate_delta_v(self):
         delta_v = calculate_delta_v_formula(self.initial_mass(), self.final_mass(), self.isp)
