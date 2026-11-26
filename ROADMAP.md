@@ -34,9 +34,9 @@ The project aims to develop practical programming skills in:
 - [x] Milestone 14: Handle Payload and Staging Relationships
 - [x] Milestone 15: Input Validation
 - [x] Milestone 16: Edge Cases and Numerical Safety
-- [ ] Milestone 17: Automated Testing
-- [ ] Milestone 18: Refactoring and Project Structure
-- [ ] Milestone 19: Reporting and CLI Usability
+- [x] Milestone 17: Automated Testing
+- [x] Milestone 18: Refactoring and Project Structure
+- [x] Milestone 19: Reporting and CLI Usability
 - [ ] Milestone 20: Documentation and Final Architecture Review
 
 ---

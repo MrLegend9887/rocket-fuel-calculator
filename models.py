@@ -3,16 +3,15 @@ import math
 from calculations import calculate_delta_v as calculate_delta_v_formula
 from calculations import calculate_required_propellant as calculate_required_propellant
 
-
 class RocketStage:
     def __init__(self, dry_mass, propellant_mass, isp, payload_mass):
         self.dry_mass = dry_mass
         self.propellant_mass = propellant_mass
         self.isp = isp
         self.payload_mass = payload_mass
-        self.valueValidate()
+        self.validate_values()
 
-    def valueValidate(self):
+    def validate_values(self):
         if any(isinstance(value, bool) for value in (self.dry_mass, self.propellant_mass, self.isp, self.payload_mass)):
             raise TypeError("Boolean values are not allowed")
         if not isinstance(self.dry_mass, (int,float)) or not isinstance(self.propellant_mass, (int,float)) or not isinstance(self.isp, (int,float)) or not isinstance(self.payload_mass, (int,float)):
@@ -67,9 +66,9 @@ class Rocket:
     def __init__(self, stages, payload_mass):
         self.stages = stages
         self.payload_mass = payload_mass
-        self.validateValue()
+        self.validate_values()
 
-    def validateValue(self):
+    def validate_values(self):
         if isinstance(self.payload_mass, bool):
             raise TypeError("Boolean values are not allowed")
         elif not isinstance(self.payload_mass, (int,float)):
